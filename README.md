@@ -20,40 +20,42 @@ Open [http://localhost:3000](http://localhost:3000).
 
 ## Deploy for your team
 
-The fastest way to share a live link with your team is **Render** (free tier, works with this Express app).
+This app has two parts:
 
-### Option 1: Render (recommended)
+| Part | What it needs |
+| --- | --- |
+| **Pages, CSS, services & projects** | Static hosting (GitHub Pages, Render, etc.) |
+| **Contact form** | Node.js server (Render Web Service, Railway) |
 
-1. Push the project to GitHub:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial aetherworkz website"
-   git remote add origin https://github.com/YOUR_USER/aetherworkz.git
-   git push -u origin main
-   ```
-2. Go to [render.com](https://render.com) and sign up (free).
-3. Click **New → Web Service** and connect your GitHub repo.
-4. Render auto-detects Node — set:
-   - **Build command:** `npm install`
-   - **Start command:** `npm start`
-5. Deploy. You'll get a URL like `https://aetherworkz.onrender.com` to share with your team.
+### GitHub Pages (static — services/projects work, contact form does not)
 
-A `render.yaml` file is included for blueprint-style deploys.
+1. On GitHub: **Settings → Pages → Build and deployment**
+2. Source: **Deploy from a branch**
+3. Branch: `main`, folder: **`/public`**
+4. Your site will be at `https://YOUR_USERNAME.github.io/aetherworkz/`
 
-### Option 2: Railway
+Services and projects load from `/data/*.json` and work on Pages. The contact form needs a Node host (see below).
 
-Same flow — connect GitHub at [railway.app](https://railway.app), deploy the repo, share the generated URL.
+### Render (full app — everything works)
 
-### Option 3: Quick preview (no deploy)
+1. Push to GitHub
+2. [render.com](https://render.com) → **New → Web Service** (not Static Site)
+3. Connect `gin7324/aetherworkz`
+4. **Build command:** `npm install`
+5. **Start command:** `npm start`
+6. Share the `*.onrender.com` URL with your team
 
-Share your local site instantly with a tunnel:
+A `render.yaml` file is included for blueprint deploys.
+
+### Railway
+
+Same as Render — connect the GitHub repo and deploy as a Node service.
+
+### Quick local preview for your team
 
 ```bash
 npx localtunnel --port 3000
 ```
-
-You'll get a temporary public URL (good for a quick demo, not permanent).
 
 ## API endpoints
 

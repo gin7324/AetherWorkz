@@ -9,6 +9,18 @@ const yearEl = document.getElementById("year");
 
 yearEl.textContent = new Date().getFullYear();
 
+function assetUrl(path) {
+  return new URL(path, document.baseURI).href;
+}
+
+async function fetchJson(paths) {
+  for (const path of paths) {
+    const res = await fetch(assetUrl(path));
+    if (res.ok) return res.json();
+  }
+  throw new Error("Failed to load data");
+}
+
 // Mobile navigation
 navToggle.addEventListener("click", () => {
   const expanded = navToggle.getAttribute("aria-expanded") === "true";
@@ -23,12 +35,10 @@ navMenu.querySelectorAll("a").forEach((link) => {
   });
 });
 
-// Fetch services from API
+// Fetch services — static JSON works on all hosts; API is fallback
 async function loadServices() {
   try {
-    const res = await fetch("/api/services");
-    if (!res.ok) throw new Error("Failed to load services");
-    const services = await res.json();
+    const services = await fetchJson(["data/services.json", "api/services"]);
 
     servicesGrid.innerHTML = services
       .map(
@@ -47,12 +57,10 @@ async function loadServices() {
   }
 }
 
-// Fetch projects from API
+// Fetch projects — static JSON works on all hosts; API is fallback
 async function loadProjects() {
   try {
-    const res = await fetch("/api/projects");
-    if (!res.ok) throw new Error("Failed to load projects");
-    const projects = await res.json();
+    const projects = await fetchJson(["data/projects.json", "api/projects"]);
 
     projectsList.innerHTML = projects
       .map(
@@ -91,7 +99,7 @@ contactForm.addEventListener("submit", async (e) => {
   submitBtn.textContent = "Sending…";
 
   try {
-    const res = await fetch("/api/contact", {
+    const res = await fetch(assetUrl("api/contact"), {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(payload),

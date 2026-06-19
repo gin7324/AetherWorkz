@@ -1,0 +1,23 @@
+[
+  {
+    "id": "atlas-platform",
+    "name": "Atlas Platform",
+    "tagline": "Internal tooling suite",
+    "description": "A modular dashboard framework for teams managing complex operational workflows.",
+    "status": "In development"
+  },
+  {
+    "id": "nexus-api",
+    "name": "Nexus API",
+    "tagline": "Unified data layer",
+    "description": "A high-performance API gateway connecting disparate services into a single interface.",
+    "status": "Beta"
+  },
+  {
+    "id": "forge-cli",
+    "name": "Forge CLI",
+    "tagline": "Developer productivity",
+    "description": "Command-line tooling that accelerates scaffolding, testing, and deployment workflows.",
+    "status": "Coming soon"
+  }
+]

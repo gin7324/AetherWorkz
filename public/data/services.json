@@ -1,0 +1,26 @@
+[
+  {
+    "id": "product-engineering",
+    "title": "Product Engineering",
+    "description": "End-to-end development of web and mobile products — from architecture to launch.",
+    "icon": "◈"
+  },
+  {
+    "id": "cloud-infrastructure",
+    "title": "Cloud & Infrastructure",
+    "description": "Scalable backends, DevOps pipelines, and cloud-native systems built for reliability.",
+    "icon": "◇"
+  },
+  {
+    "id": "ai-integration",
+    "title": "AI Integration",
+    "description": "Practical AI features woven into your product — automation, search, and intelligent workflows.",
+    "icon": "◆"
+  },
+  {
+    "id": "design-systems",
+    "title": "Design Systems",
+    "description": "Cohesive UI libraries and design tokens that keep your product consistent as it grows.",
+    "icon": "▣"
+  }
+]
