@@ -52,6 +52,20 @@ body {
   background-color: var(--black);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  opacity: 1;
+  transition: opacity 0.35s ease;
+}
+
+body.page-hidden {
+  opacity: 0;
+}
+
+body.page-visible {
+  opacity: 1;
+}
+
+body.page-fade-out {
+  opacity: 0;
 }
 
 img {
@@ -402,6 +416,39 @@ address {
 .card:hover {
   border-color: var(--gray-700);
   transform: translateY(-2px);
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-md);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-md);
+}
+
+.profile-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.profile-role {
+  color: var(--gray-400);
+  margin-bottom: var(--space-md);
+}
+
+.credential-list {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: var(--space-sm);
+  color: var(--gray-500);
+}
+
+.credential-list li {
+  font-size: 0.95rem;
 }
 
 .card-icon {
