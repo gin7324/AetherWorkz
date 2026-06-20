@@ -1,23 +1,30 @@
 [
   {
-    "id": "atlas-platform",
-    "name": "Atlas Platform",
-    "tagline": "Internal tooling suite",
-    "description": "A modular dashboard framework for teams managing complex operational workflows.",
-    "status": "In development"
+    "id": "xampp-php-webapp",
+    "name": "XAMPP PHP Web App",
+    "tagline": "XAMPP-based HTML/CSS/PHP project",
+    "description": "Completed web applications built with XAMPP, HTML, CSS, and PHP backend scripting.",
+    "status": "Completed"
   },
   {
-    "id": "nexus-api",
-    "name": "Nexus API",
-    "tagline": "Unified data layer",
-    "description": "A high-performance API gateway connecting disparate services into a single interface.",
-    "status": "Beta"
+    "id": "fullstack-website",
+    "name": "Fullstack Website",
+    "tagline": "Frontend and backend development",
+    "description": "Responsive websites developed with frontend interfaces and backend service integration.",
+    "status": "Completed"
   },
   {
-    "id": "forge-cli",
-    "name": "Forge CLI",
-    "tagline": "Developer productivity",
-    "description": "Command-line tooling that accelerates scaffolding, testing, and deployment workflows.",
-    "status": "Coming soon"
+    "id": "android-studio-webapp",
+    "name": "Android Studio Web App",
+    "tagline": "Web app created using Android Studio",
+    "description": "Software delivered through an Android Studio-based application with a software-first workflow.",
+    "status": "Completed"
+  },
+  {
+    "id": "ccna-networking",
+    "name": "CCNA Networking",
+    "tagline": "CCNA v1 Networking Essentials",
+    "description": "Networking fundamentals and infrastructure expertise to support software deployment and hosting.",
+    "status": "Experienced"
   }
 ]

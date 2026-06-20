@@ -7,7 +7,104 @@ const navToggle = document.querySelector(".nav-toggle");
 const navMenu = document.getElementById("nav-menu");
 const yearEl = document.getElementById("year");
 
-yearEl.textContent = new Date().getFullYear();
+if (yearEl) {
+  yearEl.textContent = new Date().getFullYear();
+}
+
+const internalNavLinks = Array.from(document.querySelectorAll('a[href]')).filter((link) => {
+  const href = link.getAttribute('href');
+  if (!href) return false;
+  if (href.startsWith('#')) return false;
+  if (href.startsWith('mailto:') || href.startsWith('tel:')) return false;
+  if (href.startsWith('http') && !href.startsWith(location.origin)) return false;
+  if (href.includes('/api')) return false;
+  if (link.target === '_blank') return false;
+  return true;
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  requestAnimationFrame(() => document.body.classList.add('page-visible'));
+
+  internalNavLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const href = link.getAttribute('href');
+      if (!href || href.startsWith('#') || href.startsWith('mailto:') || href.startsWith('tel:')) {
+        return;
+      }
+
+      event.preventDefault();
+      document.body.classList.add('page-fade-out');
+      window.setTimeout(() => {
+        window.location.href = href;
+      }, 260);
+    });
+  });
+
+  if (navToggle && navMenu) {
+    navToggle.addEventListener("click", () => {
+      const expanded = navToggle.getAttribute("aria-expanded") === "true";
+      navToggle.setAttribute("aria-expanded", String(!expanded));
+      navMenu.classList.toggle("is-open");
+    });
+
+    navMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => {
+        navToggle.setAttribute("aria-expanded", "false");
+        navMenu.classList.remove("is-open");
+      });
+    });
+  }
+
+  if (servicesGrid) {
+    loadServices();
+  }
+
+  if (projectsList) {
+    loadProjects();
+  }
+
+  if (contactForm && formStatus && submitBtn) {
+    contactForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      formStatus.textContent = "";
+      formStatus.className = "form-status";
+
+      const formData = new FormData(contactForm);
+      const payload = {
+        name: formData.get("name"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+      };
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Sending…";
+
+      try {
+        const res = await fetch(assetUrl("api/contact"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.error || "Something went wrong.");
+        }
+
+        formStatus.textContent = data.message;
+        formStatus.classList.add("success");
+        contactForm.reset();
+      } catch (err) {
+        formStatus.textContent = err.message;
+        formStatus.classList.add("error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Send message";
+      }
+    });
+  }
+});
 
 function assetUrl(path) {
   return new URL(path, document.baseURI).href;
