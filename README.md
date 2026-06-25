@@ -66,6 +66,16 @@ npx localtunnel --port 3000
 | GET    | `/api/projects` | Current projects         |
 | POST   | `/api/contact`  | Submit contact form      |
 
+Contact submissions are appended to `server/data/contact-submissions.csv` by default. The file is CSV-formatted so it opens directly in Excel, and it is ignored by Git because it contains private customer details.
+
+To save submissions somewhere else, set:
+
+```bash
+CONTACT_SUBMISSIONS_FILE=/absolute/path/to/contact-submissions.csv
+```
+
+On hosted environments, point `CONTACT_SUBMISSIONS_FILE` at persistent storage so the sheet survives restarts and redeploys.
+
 ### Contact form payload
 
 ```json
