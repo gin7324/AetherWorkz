@@ -3,7 +3,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const defaultSubmissionsFile = path.join(__dirname, "contact-submissions.xlsx");
+const defaultSubmissionsFile = path.join(__dirname, "contact-submissions.csv");
 const submissionsFile = path.resolve(
   process.env.CONTACT_SUBMISSIONS_FILE || defaultSubmissionsFile
 );
