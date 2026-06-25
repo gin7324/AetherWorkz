@@ -76,6 +76,14 @@ CONTACT_SUBMISSIONS_FILE=/absolute/path/to/contact-submissions.csv
 
 On hosted environments, point `CONTACT_SUBMISSIONS_FILE` at persistent storage so the sheet survives restarts and redeploys.
 
+On Render, files are written on Render's server, not your local computer. To download the private CSV from the deployed site, set a long random `CONTACT_EXPORT_TOKEN` environment variable in Render, then visit:
+
+```text
+https://YOUR-RENDER-APP.onrender.com/api/contact/submissions.csv?token=YOUR_CONTACT_EXPORT_TOKEN
+```
+
+For long-term storage on Render, attach a persistent disk and set `CONTACT_SUBMISSIONS_FILE` to a path inside that disk, such as `/var/data/contact-submissions.csv`.
+
 ### Contact form payload
 
 ```json

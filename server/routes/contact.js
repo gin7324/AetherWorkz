@@ -1,5 +1,6 @@
 import { Router } from "express";
 import crypto from "crypto";
+import { access } from "fs/promises";
 import {
   appendContactSubmission,
   getContactSubmissionsPath,
@@ -10,8 +11,31 @@ const router = Router();
 const emailUser = process.env.EMAIL_USER;
 const emailPass = process.env.EMAIL_PASS;
 const emailTo = process.env.EMAIL_TO || "genekenryp@gmail.com";
+const contactExportToken = process.env.CONTACT_EXPORT_TOKEN;
 
 let transporterPromise;
+
+router.get("/submissions.csv", async (req, res) => {
+  if (!isAuthorizedExportRequest(req)) {
+    return res.status(401).json({
+      success: false,
+      error: "A valid contact export token is required.",
+    });
+  }
+
+  const submissionsPath = getContactSubmissionsPath();
+
+  try {
+    await access(submissionsPath);
+  } catch {
+    return res.status(404).json({
+      success: false,
+      error: "No contact submissions have been saved yet.",
+    });
+  }
+
+  res.download(submissionsPath, "contact-submissions.csv");
+});
 
 router.post("/", async (req, res) => {
   const { name, email, message } = req.body;
@@ -69,6 +93,16 @@ router.post("/", async (req, res) => {
     message: "Thanks for reaching out. Your message has been received.",
   });
 });
+
+function isAuthorizedExportRequest(req) {
+  if (!contactExportToken) return false;
+
+  const authHeader = req.get("authorization") || "";
+  const bearerToken = authHeader.startsWith("Bearer ") ? authHeader.slice(7) : "";
+  const queryToken = typeof req.query.token === "string" ? req.query.token : "";
+
+  return bearerToken === contactExportToken || queryToken === contactExportToken;
+}
 
 async function sendContactEmail(submission) {
   if (!emailUser || !emailPass) {
